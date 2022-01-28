@@ -11,14 +11,14 @@ function RecordAddEdit(props) {
 	const [noteState, noteStateSetter] = React.useState(props.noteState ?? "");
 	const [categoryState, categoryStateSetter] = React.useState(props.categoryState ?? "");
 
-  const dispatch = useDispatch();
-  const categoryList = useSelector(state => state.categories);
+	const dispatch = useDispatch();
+	const categoryList = useSelector(state => state.categories);
 
-  const deleteInputs = () => {
-    moneyStateSetter("");
-    nameStateSetter("");
-    noteStateSetter("");
-  };
+	const deleteInputs = () => {
+		moneyStateSetter("");
+		nameStateSetter("");
+		noteStateSetter("");
+	};
 
 	return (
 		<>
@@ -54,19 +54,19 @@ function RecordAddEdit(props) {
 				text="Thêm"
 				icon="plus"
 				onPress={() => {
-          const currentRecord = {
-            name: nameState,
-            money: moneyState,
-            note: noteState,
-            category: categoryState
-          };
+					const currentRecord = {
+						name: nameState,
+						money: moneyState,
+						note: noteState,
+						category: categoryState
+					};
 
-          if (props.editMode == true) {
-            dispatch(deleteRecord(currentRecord));
-          }
-          dispatch(addNewRecord(currentRecord));
-          deleteInputs();
-        }}
+					if (props.editMode == true) {
+						dispatch(deleteRecord(currentRecord));
+					}
+					dispatch(addNewRecord(currentRecord));
+					deleteInputs();
+				}}
 			/>
 		</>
 	);

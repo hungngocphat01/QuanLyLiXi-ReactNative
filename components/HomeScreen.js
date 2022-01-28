@@ -3,9 +3,9 @@ import RecordAddEdit from "./RecordAddEdit";
 
 
 function HomeScreen(props) {
-  return (
-    <RecordAddEdit/>
-  );
+	return (
+		<RecordAddEdit/>
+	);
 } 
 
 export default HomeScreen;
