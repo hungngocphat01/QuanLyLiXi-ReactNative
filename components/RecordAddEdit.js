@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { TextComponent, DropdownComponent, ButtonComponent } from "./UIComponents";
 
 import { useDispatch, useSelector } from "react-redux";
 import { addNewRecord, deleteRecord } from '../state-manager/recordSlice';
+import TitleBarContext from '../state-manager/titleBarContext';
 
 
 function RecordAddEdit(props) {
@@ -46,7 +47,7 @@ function RecordAddEdit(props) {
 
       <DropdownComponent
         placeholder="Chọn nhóm"
-        groupStateManager={[categoryState, categoryStateSetter]}
+        dropdownStateManager={[categoryState, categoryStateSetter]}
         valueList={categoryList.map(e => ({label: e, value: e}))}
       />
 

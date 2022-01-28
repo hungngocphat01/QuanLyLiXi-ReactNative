@@ -29,10 +29,10 @@ function DropdownComponent(props) {
   let currentValue = null;
   let setValue = null;
 
-  if (props.groupStateManager == null) {
+  if (props.dropdownStateManager == null) {
     [currentValue, setValue] = React.useState("");
   } else {
-    [currentValue, setValue] = props.groupStateManager;
+    [currentValue, setValue] = props.dropdownStateManager;
   }
 
   const [dropVisibility, setVisibility] = React.useState(false);
