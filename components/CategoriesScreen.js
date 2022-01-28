@@ -27,8 +27,6 @@ export default function CategoriesScreen(props) {
   const categoryList = useSelector((state) => state.categories);
   const dispatch = useDispatch();
 
-  console.log(categoryList);
-
   function ItemDeleteBtn(props) {
     return <IconButton icon="delete" onPress={() => {
       dispatch(deleteCategory(props.item));

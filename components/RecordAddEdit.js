@@ -3,8 +3,6 @@ import { TextComponent, DropdownComponent, ButtonComponent } from "./UIComponent
 
 import { useDispatch, useSelector } from "react-redux";
 import { addNewRecord, deleteRecord } from '../state-manager/recordSlice';
-import TitleBarContext from '../state-manager/titleBarContext';
-
 
 function RecordAddEdit(props) {
   const [moneyState, moneyStateSetter] = React.useState(props.moneyState ?? "");
