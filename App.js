@@ -1,16 +1,18 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React, { useContext, useState } from "react";
-import HomeScreen from "./components/HomeScreen";
-import CategoriesScreen from './components/CategoriesScreen';
-import RecordsScreen from './components/RecordsScreen';
 
 import Toast from 'react-native-toast-message';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
 import { Provider } from 'react-redux';
+import { enGB, registerTranslation } from 'react-native-paper-dates';
+
 import store from './state-manager/store';
 
+import HomeScreen from "./components/HomeScreen";
+import CategoriesScreen from './components/CategoriesScreen';
+import RecordsScreen from './components/RecordsScreen';
+import ReportScreen from './components/ReportScreen';
 
 import { 
   Appbar,
@@ -29,6 +31,7 @@ const theme = {
   }
 };
 
+registerTranslation("en-GB", enGB);
 const Stack = createNativeStackNavigator();
 
 
@@ -50,7 +53,8 @@ export default function App() {
             />
             <Stack.Screen 
               name="Report" 
-              component={HomeScreen}
+              component={ReportScreen}
+              options={{ title: "Báo cáo" }}
             />
             <Stack.Screen 
               name="Categories" 
@@ -82,7 +86,9 @@ function CustomNavBar(props) {
       <Appbar.Action icon="history" onPress={() => {
         props.navigation.navigate("Records");
       }}/>
-      <Appbar.Action icon="chart-areaspline"/>
+      <Appbar.Action icon="chart-areaspline" onPress={() => {
+        props.navigation.navigate("Report")
+      }}/>
       <Appbar.Action icon="shape" onPress={() => {
         props.navigation.navigate("Categories")
       }}/>
