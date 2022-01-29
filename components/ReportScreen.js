@@ -1,29 +1,12 @@
-import React, { useContext, useState } from "react";
-import { TextComponent, DropdownComponent, ButtonComponent } from "./UIComponents";
 import {
-  View, 
-  Text, 
-  Button, 
   StyleSheet,
-  FlatList
+  ScrollView,
+  View
 } from 'react-native';
-
-import {
-  List,
-  IconButton,
-  FAB,
-  Portal,
-  Modal,
-  Title,
-  Subheading
-} from 'react-native-paper';
 
 import { Table, Row, Rows } from 'react-native-table-component';
 
-import { useDispatch, useSelector } from "react-redux";
-import { addNewCategory, deleteCategory } from "../state-manager/categorySlice";
-import Toast from 'react-native-toast-message';
-import strftime from 'strftime';
+import { useSelector } from "react-redux";
 
 export default function ReportScreen(props) {
   const recordList = useSelector(state => state.records);
@@ -43,6 +26,8 @@ export default function ReportScreen(props) {
 
   for (const record of recordList) {
     let { category, date, money } = record;
+    // Only keep day and month, omit year
+    date = date.split("/").slice(0, 2).join("/");
 
     if (date in counter) {
       if (category in counter[date]) {
@@ -106,10 +91,12 @@ export default function ReportScreen(props) {
   
   return (
     <View style={styles.container}>
-      <Table borderStyle={styles.borderStyle}>
-        <Row data={headerRow} style={styles.header} textStyle={styles.headerText}/>
-        <Rows data={dataTable} style={styles.datarows} textStyle={styles.dataRowsText}/>
-      </Table>
+      <View>
+        <Table borderStyle={styles.borderStyle}>
+          <Row data={headerRow} style={styles.header} textStyle={styles.headerText}/>
+          <Rows data={dataTable} style={styles.datarows} textStyle={styles.dataRowsText}/>
+        </Table>
+      </View>
     </View>
   );
 }
@@ -117,7 +104,7 @@ export default function ReportScreen(props) {
 const styles = StyleSheet.create({
   header: {
     backgroundColor: "lightslategrey",
-    height: 30
+    minHeight: 30
   },
   headerText: {
     fontWeight: "bold",
@@ -127,10 +114,11 @@ const styles = StyleSheet.create({
     borderWidth: 1
   },
   container: {
-    padding: 10
+    flex: 1,
+    padding: 10,
   },
   datarows: {
-    height: 30
+    minHeight: 30
   },
   dataRowsText: {
     textAlign: "center"

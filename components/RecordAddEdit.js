@@ -109,7 +109,7 @@ function RecordAddEdit(props) {
         onPress={addBtnEventHandler}
       />
 
-      <ButtonComponent
+      {/* <ButtonComponent
         mode="contained"
         text="Show states"
         onPress={() => {
@@ -118,7 +118,7 @@ function RecordAddEdit(props) {
           }
           console.log("\n");
         }}
-      />
+      /> */}
 
     </View>
   );

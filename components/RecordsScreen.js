@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TextComponent, DropdownComponent, ButtonComponent } from "./UIComponents";
+import { StatefulTextInput, StatefulMenuChooser, ButtonComponent } from "./UIComponents";
 import {
   View, 
   Text, 

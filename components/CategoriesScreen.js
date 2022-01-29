@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { TextComponent, DropdownComponent, ButtonComponent } from "./UIComponents";
+import { StatefulTextInput, StatefulMenuChooser, ButtonComponent } from "./UIComponents";
 import {
   View, 
   Text, 
@@ -27,6 +27,8 @@ export default function CategoriesScreen(props) {
   const categoryList = useSelector((state) => state.categories);
   const dispatch = useDispatch();
 
+  console.log(categoryList);
+
   function ItemDeleteBtn(props) {
     return <IconButton icon="delete" onPress={() => {
       dispatch(deleteCategory(props.item));
@@ -41,7 +43,12 @@ export default function CategoriesScreen(props) {
 
   return (
     <View style={styles.mainViewStyle}>
-      <FlatList
+      {(categoryList.length > 0) && <FlatList
+        ListEmptyComponent={
+          <View style={styles.emptyView}>
+            <Text>Chưa có nhóm nào.</Text>
+          </View>
+        }
         data={categoryList}
         keyExtractor={item => item}
         renderItem={
@@ -52,7 +59,7 @@ export default function CategoriesScreen(props) {
             }
           />
         }
-      />
+      />}
 
       <FAB
         icon="plus"
@@ -84,8 +91,8 @@ function CategoryModal(props) {
         contentContainerStyle={containerStyle}
       >
         <Title>Thêm nhóm mới</Title>
-        <TextComponent
-          textStateManager={[categoryState, categorySetState]}
+        <StatefulTextInput
+          stateHandler={[categoryState, categorySetState]}
           placeholder="Nhập tên nhóm mới"
           mode="outlined"
         />
@@ -122,5 +129,10 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-between",
+  },
+  emptyView: {
+    flex: 1,
+    justifyContent: "center",
+    alignContent: "center"
   }
 });
