@@ -24,21 +24,27 @@ import Toast from 'react-native-toast-message';
 import { addNewRecord, deleteRecord } from '../state-manager/recordSlice';
 import strftime from 'strftime';
 import RecordAddEdit from "./RecordAddEdit";
+import { ScrollView } from "react-native-web";
 
 
 export default function RecordsScreen(props) {
+  // Prepare states
   const [editModalVisibility, editModalSetState] = React.useState(false);
   const [selectedEntry, setSelectedEntry] = React.useState({});
 
+  // Initialize redux related vars
   const recordList = useSelector((state) => state.records);
+  const categoryList = useSelector((state) => state.categories);
   const dispatch = useDispatch();
 
+  // Trash icon to delete a record
   function ItemDeleteBtn(props) {
     return <IconButton icon="delete" onPress={() => {
       dispatch(deleteRecord(props.item))
     }}/>
   } 
 
+  // Function to render a record
   function ListItem({item}) {
     return <List.Item
       title={
@@ -50,7 +56,7 @@ export default function RecordsScreen(props) {
       description={
         props => <View>
           <Subheading style={styles.moneyTextStyle}>{item.money} đ</Subheading>
-          <Text>{strftime("%d/%m/%Y", new Date(item.date))}</Text>
+          <Text>{item.date}</Text>
           {(item.note && item.note.length > 0) ? <Text>{item.note}</Text> : null}
         </View>
       }
@@ -64,39 +70,64 @@ export default function RecordsScreen(props) {
     />
   }
 
+  // Group records by `category` field
+  const groupByAccordions = [];
+  for (const category of categoryList) {
+    const categoryItems = recordList.filter(e => e.category == category);
+
+    if (categoryItems.length > 0) {
+      groupByAccordions.push(
+        <List.Accordion title={category} style={{ backgroundColor: "silver" }}>
+          <FlatList
+            data={categoryItems}
+            keyExtractor={item => item.name + item.category}
+            renderItem={({item}) => <ListItem item={item}/>}
+          />
+        </List.Accordion>
+      )
+    }
+  }
+
+  // Main view's content
+  const flexBoxChildren = [
+    <FlatList
+      data={groupByAccordions}
+      renderItem={({item}) => item}
+      keyExtractor={(accordion) => accordion.props.title}
+    />,
+    <EditRecordModal
+      selectedEntry={selectedEntry}
+      modalStateManager={[editModalVisibility, editModalSetState]}
+    />
+  ];
+
   return (
     <View style={styles.mainViewStyle}>
-      <FlatList
-        data={recordList}
-        keyExtractor={item => (item.name, item.category)}
-        renderItem={({item}) => <ListItem item={item}/>}
-      />
-
-      <EditRecordModal
-        selectedEntry={selectedEntry}
-        modalStateManager={[editModalVisibility, editModalSetState]}
-      />
+      {flexBoxChildren}
     </View>
   );
 }
 
 
 function EditRecordModal(props) {
+  // Initialize states
   const [visible, setVisible] = props.modalStateManager;
   const [categoryState, categorySetState] = React.useState(true);
   const item = props.selectedEntry;
   const dispatch = useDispatch();
 
+  // Function to show and hide modals
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
-
   const containerStyle = {backgroundColor: 'white', padding: 20};
 
+  // Retrieve info from selected entry
   const predefinedState = {
-    moneyState: item.money ? item.money.toString() : null,
-    nameState: item.name,
-    noteState: item.note,
-    categoryState: item.category
+    money: item.money ? item.money.toString() : null,
+    name: item.name,
+    note: item.note,
+    category: item.category,
+    date: item.date
   }
 
   return (
@@ -107,7 +138,7 @@ function EditRecordModal(props) {
         contentContainerStyle={containerStyle}
       >
         <Title>Chỉnh sửa bản ghi</Title>
-        <RecordAddEdit editMode={true} {...predefinedState}/>        
+        <RecordAddEdit editMode={true} setVisible={setVisible} recordInfo={predefinedState}/>        
       </Modal>
     </Portal>
   );
@@ -123,7 +154,7 @@ const styles = StyleSheet.create({
   mainViewStyle: {
     flex: 1,
     flexDirection: "column",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
   },
   moneyTextStyle: {
     color: "green"

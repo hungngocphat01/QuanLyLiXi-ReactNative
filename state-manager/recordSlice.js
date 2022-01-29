@@ -12,9 +12,9 @@ export const recordSlice = createSlice({
 
 function addRecordCallback(state, action) {
   // Every record is unique by CATEGORY and NAME
-  const { name, money, note, category } = action.payload;
-  if (name.length == 0 || money.length == 0 || category.length == 0) {
-    console.log("Empty! Refusing");
+  const { name, money, note, category, date } = action.payload;
+  if (name.length == 0 || money.length == 0 || category.length == 0 || date.length == 0) {
+    console.warn("Empty! Refusing");
     Toast.show({
       type: "error",
       text1: "Thông tin trống! Vui lòng kiểm tra lại.",
@@ -24,14 +24,13 @@ function addRecordCallback(state, action) {
   }
 
   const idx = state.findIndex(elem => (elem["name"] == name) && (elem["category"] == category));
-
   if (idx == -1) {
     const newRecord = {
       name: name,
       money: Number.parseInt(money),
       note: note,
       category: category,
-      date: (new Date()).toISOString()
+      date: date
     };
     state.push(newRecord);
     console.log(newRecord);
@@ -42,7 +41,7 @@ function addRecordCallback(state, action) {
       position: "bottom"
     });
   } else {
-    console.log("Object existed.");
+    console.error("Object existed.");
 
     Toast.show({
       type: "info",
@@ -67,7 +66,7 @@ function deleteRecordCallback(state, action) {
       position: "bottom"
     })
   } else {
-    console.log("Record not found. Cannot delete.");
+    console.error("Record not found. Cannot delete.", action.payload);
   }
 }
 
