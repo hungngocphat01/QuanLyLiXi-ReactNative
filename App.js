@@ -5,8 +5,6 @@ import Toast from 'react-native-toast-message';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider } from 'react-redux';
-import { enGB, registerTranslation } from 'react-native-paper-dates';
-
 import store from './state-manager/store';
 
 import HomeScreen from "./components/HomeScreen";
@@ -31,7 +29,6 @@ const theme = {
   }
 };
 
-registerTranslation("en-GB", enGB);
 const Stack = createNativeStackNavigator();
 
 

@@ -2163,7 +2163,7 @@ color-string@^1.6.0:
     color-name "^1.0.0"
     simple-swizzle "^0.2.2"
 
-color@^3.1.2, color@^3.2.1:
+color@^3.1.2:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/color/-/color-3.2.1.tgz#3544dc198caf4490c3ecc9a790b54fe9ff45e164"
   integrity sha512-aBl7dZI9ENN6fUGC7mWpMTPNHmWUSNan9tuWN6ahh5ZLNk9baLJOnSMlrQkHcrfFgz2/RigjUVAjdx36VcemKA==
@@ -4569,13 +4569,6 @@ react-native-modal-datetime-picker@^13.0.1:
   integrity sha512-uPgonEKa/nIotmboEEriTCVfWLgrtuR+fybqSw6XcPc/+ve7Q6p55cbUGKtne3+sFcelk+QHcb0aPu56+VbsJA==
   dependencies:
     prop-types "^15.7.2"
-
-react-native-paper-dates@^0.8.6:
-  version "0.8.6"
-  resolved "https://registry.yarnpkg.com/react-native-paper-dates/-/react-native-paper-dates-0.8.6.tgz#b0dee6c63ec4dc5b5ffd1f34e9a5808e3fa9ca1a"
-  integrity sha512-GmV5OStoOtiS2s4k0KRTJfTzjj53/H+AIOWN7mMyqtVMq186V0wrPxthv2wCQMKy/4fyS63E8mDdmwRiLDyAMw==
-  dependencies:
-    color "^3.2.1"
 
 react-native-paper-dropdown@^1.0.7:
   version "1.0.7"
