@@ -122,7 +122,7 @@ function DatePickerComponent(props) {
       isVisible={modalVsblty}
       mode="date"
       onConfirm={handleConfirm}
-      onCancel={() => {}}
+      onCancel={() => setModalVsblty(false)}
     />
   );
 
