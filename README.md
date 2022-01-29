@@ -6,6 +6,12 @@
 
 Mục tiêu chính là để nghịch React Native 🐧
 
+## Build
+```bash
+yarn install 
+expo build:android -t apk
+```
+
 ## Các dependency chính: 
 - `react-native-paper`
 - `react-navigation`
